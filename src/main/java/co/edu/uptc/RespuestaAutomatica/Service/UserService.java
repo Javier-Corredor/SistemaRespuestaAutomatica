@@ -6,7 +6,8 @@ import co.edu.uptc.RespuestaAutomatica.Entities.UserEntity;
 
 public interface UserService {
     public abstract List<UserEntity> getListUsers();
-    public abstract UserEntity saveUser(int id, UserEntity user);
-    public abstract UserEntity updateUser(int id, UserEntity user);
-    public abstract boolean deleteUser(int id);
+    public abstract UserEntity saveUser(Integer id, UserEntity user);
+    public abstract UserEntity updateUser(Integer id, UserEntity user);
+    public abstract boolean deleteUser(Integer id);
+    public abstract UserEntity getUserByUsername(String username);
 }
