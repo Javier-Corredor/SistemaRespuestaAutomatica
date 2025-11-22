@@ -39,17 +39,17 @@ public class AuthController {
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
-            logger.info("Intento de login para usuario: {}", loginRequest.getUsername());
+            logger.info("Intento de login para email: {}", loginRequest.getEmail());
 
-            UserEntity user = userService.getUserByUsername(loginRequest.getUsername());
+            UserEntity user = userService.getUserByEmail(loginRequest.getEmail());
 
             if (user == null) {
-                logger.warn("Usuario no encontrado: {}", loginRequest.getUsername());
+                logger.warn("Usuario no encontrado (email): {}", loginRequest.getEmail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
             }
 
             if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                logger.warn("Contraseña incorrecta para usuario: {}", loginRequest.getUsername());
+                logger.warn("Contraseña incorrecta para email: {}", loginRequest.getEmail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
             }
 

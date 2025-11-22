@@ -10,4 +10,5 @@ public interface UserService {
     public abstract UserEntity updateUser(Integer id, UserEntity user);
     public abstract boolean deleteUser(Integer id);
     public abstract UserEntity getUserByUsername(String username);
+    public abstract UserEntity getUserByEmail(String email);
 }

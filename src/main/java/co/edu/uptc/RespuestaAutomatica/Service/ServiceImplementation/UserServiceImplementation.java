@@ -110,6 +110,11 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     // Valida la parte local del email (antes de @)
     private void validateEmailLocalPart(String local) {
         if (local == null) {

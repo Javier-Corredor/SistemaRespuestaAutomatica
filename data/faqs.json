@@ -1,1 +1,101 @@
-[]
+[ {
+  "id" : 1,
+  "pregunta" : "¿Cuándo son las inscripciones para el próximo semestre?",
+  "respuesta" : "Las inscripciones inician en la primera semana de diciembre; revisa el calendario académico.",
+  "categoria" : "Inscripciones"
+}, {
+  "id" : 2,
+  "pregunta" : "¿Qué documentos necesito para inscribirme?",
+  "respuesta" : "Cédula, certificado de notas y comprobante de pago (si aplica).",
+  "categoria" : "Inscripciones"
+}, {
+  "id" : 3,
+  "pregunta" : "¿Cuál es el proceso de inscripción en línea?",
+  "respuesta" : "Ingresa al portal estudiantil, completa el formulario y confirma la inscripción.",
+  "categoria" : "Inscripciones"
+}, {
+  "id" : 4,
+  "pregunta" : "¿Puedo cambiar mis materias después de inscrito?",
+  "respuesta" : "Sí, durante el periodo de ajustes indicado en el calendario académico.",
+  "categoria" : "Inscripciones"
+}, {
+  "id" : 5,
+  "pregunta" : "¿Hay algún costo de inscripción?",
+  "respuesta" : "Generalmente no para estudiantes regulares; verifica si aplica algún valor para servicios especiales.",
+  "categoria" : "Inscripciones"
+}, {
+  "id" : 6,
+  "pregunta" : "¿Cómo veo mis calificaciones?",
+  "respuesta" : "Accede al portal estudiantil y entra a la sección 'Calificaciones' o 'Historial académico'.",
+  "categoria" : "Académica"
+}, {
+  "id" : 7,
+  "pregunta" : "¿Qué pasa si repruebo una materia?",
+  "respuesta" : "Puedes homologarla, tomarla en un periodo de recuperación o volver a matricularla según reglamento.",
+  "categoria" : "Académica"
+}, {
+  "id" : 8,
+  "pregunta" : "¿Cómo solicito un certificado de estudios?",
+  "respuesta" : "Solicítalo en Secretaría Académica a través del formulario en línea o presencialmente.",
+  "categoria" : "Académica"
+}, {
+  "id" : 9,
+  "pregunta" : "¿Cuál es el horario de atención de la facultad?",
+  "respuesta" : "El horario habitual es de lunes a viernes de 8:00 a 17:00, consulta excepciones en la web.",
+  "categoria" : "Académica"
+}, {
+  "id" : 10,
+  "pregunta" : "¿Cómo contacto a mi director de carrera?",
+  "respuesta" : "Revisa el listado de contactos en la página de la facultad o pide información en Secretaría.",
+  "categoria" : "Académica"
+}, {
+  "id" : 11,
+  "pregunta" : "¿Cómo puedo participar en proyectos de investigación?",
+  "respuesta" : "Consulta las convocatorias del departamento de investigación y contacta al profesor responsable.",
+  "categoria" : "Investigación"
+}, {
+  "id" : 12,
+  "pregunta" : "¿Hay convocatorias para semilleros de investigación?",
+  "respuesta" : "Sí, suelen publicarse al inicio de cada semestre en la página de investigación.",
+  "categoria" : "Investigación"
+}, {
+  "id" : 13,
+  "pregunta" : "¿Qué requisitos tiene la monitoría académica?",
+  "respuesta" : "Buen promedio académico y disponibilidad horaria; postúlate cuando abran convocatorias.",
+  "categoria" : "Investigación"
+}, {
+  "id" : 14,
+  "pregunta" : "¿Cómo solicito un tutor de investigación?",
+  "respuesta" : "Contacta al coordinador de investigación indicando tus intereses y disponibilidad.",
+  "categoria" : "Investigación"
+}, {
+  "id" : 15,
+  "pregunta" : "¿Dónde está ubicada la oficina de bienestar institucional?",
+  "respuesta" : "En el edificio central, primer piso; consulta el mapa en la web para detalles.",
+  "categoria" : "Otros"
+}, {
+  "id" : 16,
+  "pregunta" : "¿Cuáles son los horarios de la biblioteca?",
+  "respuesta" : "De lunes a viernes de 7:00 a 21:00 y sábados de 8:00 a 14:00.",
+  "categoria" : "Otros"
+}, {
+  "id" : 17,
+  "pregunta" : "¿Hay servicio de transporte universitario?",
+  "respuesta" : "Sí, revisa las rutas y horarios publicados en movilidad estudiantil.",
+  "categoria" : "Otros"
+}, {
+  "id" : 18,
+  "pregunta" : "¿Cómo puedo entrar a un grupo de cultura?",
+  "respuesta" : "Consulta las convocatorias culturales y contacta los coordinadores para inscribirte.",
+  "categoria" : "Otros"
+}, {
+  "id" : 19,
+  "pregunta" : "¿La universidad ofrece servicios de psicología?",
+  "respuesta" : "Sí, el programa de bienestar ofrece atención psicológica para estudiantes previa cita.",
+  "categoria" : "Otros"
+}, {
+  "id" : 20,
+  "pregunta" : "¿Bro?",
+  "respuesta" : "nooooo",
+  "categoria" : "Otros"
+} ]
