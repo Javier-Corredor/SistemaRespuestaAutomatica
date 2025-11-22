@@ -42,7 +42,7 @@ public class UserController {
 		return esi.getListUsers();
 	}
 
-	@Operation(summary = "Guarda al Usuario ingresado", description = "Al ingresar un usuario nuevo, este se guarda en la base de datos.")
+	@Operation(summary = "Guarda al Usuario ingresado", description = "Al ingresar un usuario nuevo, este se guarda en la base de datos.\nEl campo 'email' puede enviarse como la parte local (sin '@') o con '@uptc.edu.co'.\nLa parte local permite letras, dígitos, '.', '_' y '-', longitud 1-64; no puede comenzar/terminar con '.' ni contener '..'.")
 	@PostMapping(path = "/guardar/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserEntity guardarUsuario(@RequestBody UserEntity user) {
 		logger.info("El usuario accedio al servicio guardar Users");

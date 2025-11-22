@@ -4,6 +4,8 @@ import co.edu.uptc.RespuestaAutomatica.Security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,6 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+@EnableCaching
 public class SecurityConfig {
 
     @Autowired
@@ -29,14 +33,20 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/login", "/auth/refresh", "/auth/validate").permitAll()
-                        .requestMatchers("/auth/admin/create").hasRole("ADMIN")
-                        .requestMatchers("/user/listar/").hasRole("ADMIN")
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/user/guardar/**").permitAll()
-                        .anyRequest().authenticated()
-                );
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers(
+                    "/swagger-ui/**",
+                    "/swagger/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/api-docs/**",
+                    "/webjars/**",
+                    "/favicon.ico"
+                ).permitAll()
+                .requestMatchers("/auth/login", "/auth/refresh", "/auth/validate", "/auth/admin/create").permitAll()
+                .requestMatchers("/user/guardar/**").permitAll()
+                .anyRequest().authenticated()
+            );
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
