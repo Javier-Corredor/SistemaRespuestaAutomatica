@@ -10,7 +10,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    @CachePut("GuardarUser")
+    @CacheEvict(value = "users", allEntries = true)
     public UserEntity saveUser(Integer id, UserEntity user) {
         // Normalizar email: si viene sin '@', agregar dominio por defecto
         final String DOMAIN = "@uptc.edu.co";
@@ -87,7 +86,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    @CachePut("ActualizarUser")
+    @CacheEvict(value = "users", allEntries = true)
     public UserEntity updateUser(Integer id, UserEntity user) {
         if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -99,7 +98,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    @CacheEvict("EliminarUser")
+    @CacheEvict(value = "users", allEntries = true)
     public boolean deleteUser(Integer id) {
         um.deleteById(id);
         return true;

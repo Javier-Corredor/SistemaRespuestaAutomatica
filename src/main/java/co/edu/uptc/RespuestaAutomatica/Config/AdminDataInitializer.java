@@ -23,11 +23,11 @@ public class AdminDataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
-            String adminUsername = "admin";
+            String adminUsername = "Admin";
             if (userRepository.findByUsername(adminUsername) == null) {
                 UserEntity admin = new UserEntity();
                 admin.setUsername(adminUsername);
-                admin.setEmail("admin@local.local");
+                admin.setEmail("admin@uptc.edu.co");
                 admin.setPassword(passwordEncoder.encode("Admin123!"));
                 admin.setRole("ADMIN");
 

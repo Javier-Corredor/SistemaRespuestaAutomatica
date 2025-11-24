@@ -2,6 +2,7 @@ package co.edu.uptc.RespuestaAutomatica.Controller;
 
 import co.edu.uptc.RespuestaAutomatica.DTO.AuthResponse;
 import co.edu.uptc.RespuestaAutomatica.DTO.AuthTokenPackage;
+import co.edu.uptc.RespuestaAutomatica.DTO.AuthLoginResponse;
 import co.edu.uptc.RespuestaAutomatica.DTO.LoginRequest;
 import co.edu.uptc.RespuestaAutomatica.DTO.AdminCreateRequest;
 import co.edu.uptc.RespuestaAutomatica.Entities.UserEntity;
@@ -56,13 +57,17 @@ public class AuthController {
             String accessToken = tokenProvider.generateAccessToken(user.getUsername(), user.getEmail(), user.getRole());
             String refreshToken = tokenProvider.generateRefreshToken(user.getUsername(), user.getEmail(), user.getRole());
 
-            AuthTokenPackage tokenPackage = AuthTokenPackage.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
-                    .authScheme("Bearer")
-                    .build();
 
-            return ResponseEntity.ok(tokenPackage);
+                AuthLoginResponse loginResponse = new AuthLoginResponse(
+                    accessToken,
+                    refreshToken,
+                    "Bearer",
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getRole()
+                );
+
+                return ResponseEntity.ok(loginResponse);
 
         } catch (Exception e) {
             logger.error("Error al procesar el login: ", e);
@@ -128,11 +133,18 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username, email y password son requeridos");
             }
 
-            // Validar que el usuario no exista
-            UserEntity existing = userService.getUserByUsername(adminRequest.getUsername());
-            if (existing != null) {
-                logger.warn("Usuario ya existe: {}", adminRequest.getUsername());
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("El usuario ya existe");
+            // Validar que el username no exista
+            UserEntity existingByUsername = userService.getUserByUsername(adminRequest.getUsername());
+            if (existingByUsername != null) {
+                logger.warn("Username ya existe: {}", adminRequest.getUsername());
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("El username ya existe");
+            }
+
+            // Validar que el email no exista
+            UserEntity existingByEmail = userService.getUserByEmail(adminRequest.getEmail());
+            if (existingByEmail != null) {
+                logger.warn("Email ya existe: {}", adminRequest.getEmail());
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("El email ya está en uso");
             }
 
             // Crear el nuevo admin
@@ -145,8 +157,12 @@ public class AuthController {
             UserEntity savedAdmin = userService.saveUser(null, newAdmin);
             logger.info("Admin creado exitosamente: {} (id={})", adminRequest.getUsername(), savedAdmin.getId());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Admin creado exitosamente. Username: " + savedAdmin.getUsername());
+            // Devolver el objeto creado para facilitar verificación en el frontend
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
 
+        } catch (IllegalArgumentException e) {
+            logger.warn("Datos inválidos al crear admin: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error al crear admin: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el admin");

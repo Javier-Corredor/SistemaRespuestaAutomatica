@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/faq")
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "FAQ Controller", description = "Preguntas frecuentes por categoría")
 public class FaqController {
 
@@ -60,20 +60,17 @@ public class FaqController {
     }
 
     @Operation(summary = "Listar preguntas sin responder (ADMIN)")
-    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Lista de preguntas sin responder"),
         @ApiResponse(responseCode = "401", description = "No autenticado"),
         @ApiResponse(responseCode = "403", description = "No autorizado")
     })
     @GetMapping(path = "/unanswered", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
     public List<QuestionEntity> unanswered() throws IOException {
         return faqService.getUnanswered();
     }
 
     @Operation(summary = "Responder una pregunta (ADMIN)")
-    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Pregunta respondida"),
         @ApiResponse(responseCode = "400", description = "Datos inválidos"),
@@ -81,9 +78,29 @@ public class FaqController {
         @ApiResponse(responseCode = "403", description = "No autorizado")
     })
     @PostMapping(path = "/{id}/answer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
     public QuestionEntity answer(@PathVariable Integer id, @RequestBody(required = true) java.util.Map<String,String> body) throws IOException {
         String respuesta = body.get("respuesta");
         return faqService.answerQuestion(id, respuesta);
+    }
+
+    @Operation(summary = "Eliminar pregunta (ADMIN)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Pregunta eliminada"),
+        @ApiResponse(responseCode = "404", description = "Pregunta no encontrada"),
+        @ApiResponse(responseCode = "401", description = "No autenticado"),
+        @ApiResponse(responseCode = "403", description = "No autorizado")
+    })
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean deleteQuestion(@PathVariable Integer id) throws IOException {
+        return faqService.deleteQuestion(id);
+    }
+
+    @Operation(summary = "Listar todas las preguntas")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Lista de todas las preguntas")
+    })
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<QuestionEntity> getAllQuestions() throws IOException {
+        return faqService.getAllQuestions();
     }
 }

@@ -140,4 +140,22 @@ public class FaqService {
         }
         throw new IllegalArgumentException("Pregunta no encontrada");
     }
+
+    @CacheEvict(value = {"faqs_by_category", "faqs_search", "faq_categories"}, allEntries = true)
+    public boolean deleteQuestion(Integer id) throws IOException {
+        if (id == null) throw new IllegalArgumentException("Id es requerido");
+        List<QuestionEntity> all = readAll();
+        boolean removed = all.removeIf(q -> q.getId() != null && q.getId().equals(id));
+        if (removed) {
+            writeAll(all);
+            logger.info("Pregunta id={} eliminada", id);
+            return true;
+        } else {
+            throw new IllegalArgumentException("Pregunta no encontrada");
+        }
+    }
+
+    public List<QuestionEntity> getAllQuestions() throws IOException {
+        return readAll();
+    }
 }
